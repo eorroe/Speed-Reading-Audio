@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Speed Reading</title>
+</head>
+<body>
+<!-- SOUND OPTIONS -->
+<input type="radio" name="audio" value="Ding.wav">DING</input> <br>
+<input type="radio" name="audio" value="InformationBar.wav">INFORMATION BAR</input> <br>
+<input type="radio" name="audio" value="Pop-upBlocked.wav">POP-UP BLOCKED</input> <br>
+<input type="radio" name="audio" value="Recycle.wav">RECYCLE</input> <br>
+<input type="radio" name="audio" value="Restore.wav">RESTORE</input> <br>
+<input type="radio" name="audio" value="speechMisrecognition.wav">SPEECH MISRECOGNITION</input> <br>
+<!-- BUTTONS -->
+<button id="oneSec" data-interval="1000" data-stop="120">One Second</button>
+<button id="hSec" data-interval="500" data-stop="360">Half a Second</button>
+<button id="3minTimer">Three Min Timer</button>
+<!-- COUNT KEEPER -->
+<h1>Count: <span id="num">0</span></h1>
+<script type="text/javascript">
+//VARIABLES
+soundSelected = false;
+
+//BUTTONS
+oneSecondButton = document.getElementById('oneSec');
+halfSecondButton = document.getElementById('hSec');
+threeMinTimerButton = document.getElementById('3minTimer');
+
+//ARRAY OF BUTTONS
+buttons = document.getElementsByTagName('button');
+
+//COUNTHOLDER MADE
+countholder = document.getElementById('num');
+
+//ERROR MESSAGE IF AN OPTION IS NOT CHECKED
+errorMessage = document.createElement('h5');
+errorMessage.style.color = 'red';
+errorMessage.innerHTML = "YOU MUST SELECT A SOUND ABOVE BEFORE PLAYING THE SOUND";
+
+//EVENT WHEN WINDOW LOADS
+window.onload = function(){
+//ZOOM BODY TO 200%
+	document.body.style.zoom = "200%";
+	document.body.style.webkitUserSelect = 'none';
+//MAKE SOUND OBJECT AND AN ARRAY OF SOUND OPTIONS
+	sound = new Audio();
+	soundOptions = document.getElementsByName('audio');
+//ADD EVENT LISTENER TO ALL SOUND OPTIONS
+	for(i=0;i<soundOptions.length;i++){
+		soundOptions[i].addEventListener('click', function(){
+			sound.src = this.value;
+			soundSelected = true;
+			checkForSoundSelection();
+		});
+	};
+//ADD EVENT LISTENER TO SECONDS BUTTONS
+	for(i=0;i<buttons.length - 1;i++){
+		buttons[i].addEventListener('click', function(){
+			stopAndRemove();
+			checkForSoundSelection();
+			playSound(this.dataset.interval, this.dataset.stop);
+		});
+	};
+};
+
+//FUNCTIONS
+function playSound(interval, stop){
+	if(soundSelected){
+		count = 0;
+		play = setInterval(function(){
+			sound.play();
+			sound.onended = function(){
+				countholder.innerHTML = ++count;
+			};
+			if(count == stop){
+				clearInterval(play);
+			};
+		}, interval);
+	};
+};
+function stopAndRemove(){
+	errorMessage.remove();
+	if(typeof play != "undefined"){
+		clearInterval(play);
+	};
+	if(typeof timeLeft != "undefined"){
+		clearInterval(timer)
+		timeLeft.remove();
+	};
+};
+function checkForSoundSelection(){
+	if(soundSelected){
+		errorMessage.remove();
+	} else {
+		document.body.appendChild(errorMessage);
+	};
+};
+
+//EVENT LISTENERS
+threeMinTimerButton.addEventListener('click', function(){
+	stopAndRemove();
+	time = 180;
+	timeLeft = document.createElement('h1');
+	timeLeft.innerHTML = "Time Left: " + time;
+	document.body.appendChild(timeLeft);
+	timer = setInterval(function(){
+		timeLeft.innerHTML = "Time Left: " + --time;
+		if(time == 0){
+			sound = new Audio('StopBell.mp3');
+			sound.play();
+			clearInterval(timer);
+		};
+	}, 1000);
+})
+</script>
+</body>
+</html>

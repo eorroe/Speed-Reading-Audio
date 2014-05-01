@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phrases Generator</title>
+</head>
+<body>
+<h2 id="text"></h2>
+<script type="text/javascript">
+    blue = 0;
+    text = document.getElementById('text');
+    PHRASES = ["STAY CALM", "RELAX", "FOCUS", "KEEP GOING", "YOU ALMOST GOT IT", "ALMOST THERE", "YOU CAN DO IT", "DON'T GIVE UP", "DON'T QUIT NOW", "A LITTLE MORE", "YOU'RE THE BEST", "YOU WILL FINISH", "YOU'RE ALREADY DONE"];
+    window.onkeyup = function(e){
+    	if (e.keyCode == 32) {
+            text.innerHTML = "";
+            document.documentElement.webkitRequestFullScreen();
+            document.body.webkitRequestPointerLock();
+    		setInterval(function(){
+    			document.body.style.backgroundColor = "rgb(0,0,"+blue+")";
+                text.innerHTML += PHRASES[Math.floor(Math.random()*PHRASES.length)] + " ";
+    			blue++;
+                if(blue == 255) {blue = 0; text.innerHTML = "";}
+		    }, 1000);
+    	};
+    }
+</script>
+</body>
+</html>

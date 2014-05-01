@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Speed reading exercise</title>
+<head>
+<style type="text/css">
+	*{margin: 0px; padding: 0px;}
+	#block{
+		width: 100px;
+		height: 100px;
+		background-color: lightblue;
+		position: relative;
+		left: 0px;
+		top:0px;
+		right: 0px;
+		bottom: 0px;
+		-webkit-transition: 1s ease-in-out;
+	}
+
+	#block.topRight{
+		top: 0px;
+		right: 0px;
+	}
+	#block.topLeft{
+		top: 0px;
+		left: 0px;
+		right: auto;
+		bottom: auto;
+	}
+	#block.bottomRight{
+		bottom: 0px;
+		right: 0px;
+		left: auto;
+		top: auto;
+	}
+	#block.bottomLeft{
+		bottom: 0px;
+		left: 0px;
+		right: auto;
+		top: auto;
+	}
+
+</style>
+<body>
+<div id="block"></div>
+<script type="text/javascript">
+	div = document.getElementById('block');
+	count = 1;
+	window.onkeydown = function(e){
+		if(e.keyCode == 32){
+			if(count == 1){
+				div.className = "topRight";
+				count++;
+			} else if(count == 2){
+				div.className = "bottomRight";
+				count++;
+			} else if(count == 3){
+				div.className = "bottomLeft";
+				count++;
+			} else if(count == 4){
+				div.className = "topLeft";
+				count++;
+			} else if(count == 5){
+				div.className = "bottomLeft";
+				count++;
+			} else if(count == 6){
+				div.className = "topRight";
+				count++;
+			} else if(count ==7){
+				div.className = "bottomRight";
+				count++;
+			} else if(count == 8){
+				div.className = "topLeft";
+				count = 1;
+			}
+		}
+	}
+</script>
+</body>
+</html>
