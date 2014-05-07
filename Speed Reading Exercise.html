@@ -3,77 +3,89 @@
 <title>Speed reading exercise</title>
 <head>
 <style type="text/css">
-	*{margin: 0px; padding: 0px;}
-	#block{
+	*{margin: 0px; padding: 0px; -webkit-user-select: none;}
+	#block {
 		width: 100px;
 		height: 100px;
 		background-color: lightblue;
+		-webkit-transition: 0.4s linear;
+		text-align: center;
+		cursor: move;
+	}
+	span{
 		position: relative;
-		left: 0px;
-		top:0px;
-		right: 0px;
-		bottom: 0px;
-		-webkit-transition: 1s ease-in-out;
+		left: 3px;
+		top: 30px;
 	}
-
-	#block.topRight{
-		top: 0px;
-		right: 0px;
-	}
-	#block.topLeft{
-		top: 0px;
-		left: 0px;
-		right: auto;
-		bottom: auto;
-	}
-	#block.bottomRight{
-		bottom: 0px;
-		right: 0px;
-		left: auto;
-		top: auto;
-	}
-	#block.bottomLeft{
-		bottom: 0px;
-		left: 0px;
-		right: auto;
-		top: auto;
-	}
-
 </style>
 <body>
-<div id="block"></div>
+<div id="block">
+	<span>FOLLOW ME!!!</span>
+</div>
 <script type="text/javascript">
 	div = document.getElementById('block');
 	count = 1;
+	pos = window.innerWidth - 100;
+	reset = false;
+	//FUNCTION
+	function move(position){
+		if(position == "topLeft"){
+			posX = 0;
+			posY = 0;
+		} else if(position == "topRight"){
+			posX = window.innerWidth - 100;
+			posY = 0;
+		} else if(position == "bottomRight"){
+			posX = window.innerWidth - 100;
+			posY = window.innerHeight - 100;
+		} else if(position == "bottomLeft"){
+			posX = 0;
+			posY = window.innerHeight - 100;
+		};
+		div.style.webkitTransform = "translate("+posX+"px, "+posY+"px)";
+	};
 	window.onkeydown = function(e){
 		if(e.keyCode == 32){
+			fullScreen();
 			if(count == 1){
-				div.className = "topRight";
-				count++;
+				move("topRight");
 			} else if(count == 2){
-				div.className = "bottomRight";
-				count++;
+				move("bottomRight");
 			} else if(count == 3){
-				div.className = "bottomLeft";
-				count++;
+				move("bottomLeft");
 			} else if(count == 4){
-				div.className = "topLeft";
-				count++;
+				move("topLeft");
 			} else if(count == 5){
-				div.className = "bottomLeft";
-				count++;
+				move("bottomLeft");
 			} else if(count == 6){
-				div.className = "topRight";
-				count++;
-			} else if(count ==7){
-				div.className = "bottomRight";
-				count++;
+				move("topRight");
+			} else if(count == 7){
+				move("bottomRight");
 			} else if(count == 8){
-				div.className = "topLeft";
+				move("topLeft");
+			} else if(count == 9){
+				move("topRight");
+			} else if(count == 10){
+				move("bottomLeft");
+			} else if(count == 11){
+				move("bottomRight");
+			} else if(count == 12){
+				move("topLeft");
+				reset = true;
+			};
+			if(reset){
 				count = 1;
+				reset = false;
+			} else {
+				count++;
 			}
-		}
-	}
+		};
+	};
+
+function fullScreen(){
+	document.documentElement.webkitRequestFullScreen();
+	document.documentElement.webkitRequestPointerLock();
+};
 </script>
 </body>
 </html>
