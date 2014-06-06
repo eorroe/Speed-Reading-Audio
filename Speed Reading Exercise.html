@@ -12,15 +12,18 @@
 		text-align: center;
 		cursor: move;
 	}
-	span{
+	#text{
 		position: relative;
 		left: 3px;
 		top: 30px;
 	}
+	.black{
+		background-color: black;
+	}
 </style>
 <body>
 <div id="block">
-	<span>FOLLOW ME!!!</span>
+	<span id="text">FOLLOW ME!!!</span>
 </div>
 <script type="text/javascript">
 	div = document.getElementById('block');
@@ -71,14 +74,15 @@
 				move("bottomRight");
 			} else if(count == 12){
 				move("topLeft");
-				reset = true;
+				// reset = true;
+				count = 1;
 			};
-			if(reset){
+			/*if(reset){
 				count = 1;
 				reset = false;
 			} else {
 				count++;
-			}
+			}*/
 		};
 	};
 
@@ -86,6 +90,10 @@ function fullScreen(){
 	document.documentElement.webkitRequestFullScreen();
 	document.documentElement.webkitRequestPointerLock();
 };
+
+window.onclick = function(){
+	document.body.classList.toggle('black');
+}
 </script>
 </body>
 </html>
